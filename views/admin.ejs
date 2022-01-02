@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <%- include('./partials/head'); %>
+</head>
+
+
+<body>
+
+    <header>
+		<%- include('./partials/header'); %>
+
+		<div class="col-md-4 col-md-offset-4 login-content">
+            <h3>Upload Pdf</h1>
+            <div class="form-group">
+                <form action="/uploadPdf" enctype="multipart/form-data" method="POST">
+                    <div>
+                        <label for="name">Resource Title</label>
+                        <input type="text" id="name" placeholder="Name" value="" name="name" required>
+                    </div>
+                    <div>
+                        <label for="desc">Resource Description</label>
+                        <textarea id="desc" name="desc" value="" rows="2" placeholder="Description" required></textarea>
+                    </div>
+                    <div>
+                        <label for="desc">Class</label>
+                        <input type="text" id="standard" placeholder="Class" value="" name="standard" required>
+                    </div>
+                    <div>
+                        <label for="pdf">Upload PDF</label>
+                        <input type="file" id="pdf" name="Resource" value="" required accept="pdf/*">
+                    </div>
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+	</header>
+
+    <footer>
+		<%- include('./partials/footer'); %>
+	</footer>
+
+</body>
+</html>

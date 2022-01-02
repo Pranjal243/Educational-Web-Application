@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<%- include('./partials/head'); %>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$( "#form" ).submit(function(event) {
+				event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: '/login',
+					data: $('#form').serialize(),
+					dataType: "json",
+					success: function(response){
+						//alert("a");
+						//console.log(response.Success);
+						$('#form')[0].reset();
+
+						document.getElementById("check").innerHTML=response.Success;
+         					//ADD THIS CODE
+         					setTimeout(function(){
+         						document.getElementById("check").innerHTML="";
+         					},3000);
+         					if (response.Success=="Success!") {
+         						document.getElementById("aa").click();
+         					};
+         				},
+         				error: function() {
+         				}
+         			})
+			});
+
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<%- include('./partials/header'); %>
+		<div class="col-md-4 col-md-offset-4 login-content">
+			<h2>Login</h2>
+			<form id="form" method="post" >
+				<div class="inputBox">
+					<input type="text" name="phone" placeholder="Phone No." required="" class="form-control">
+					<label>Phone Number</label>
+				</div>
+				<div class="inputBox">
+					<input type="password" name="password" placeholder="Password" required="" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+					title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+					<label>Password</label>
+				</div>
+				
+				<input type="submit" value="Login" class="btn btn-success" onclick="window.location.href = '/profile'">
+			</form>
+			<div class="mssg bg-danger">
+				<span id="check" ></span>
+			</div>
+			<div id="LangTable"><a href="/profile" id="aa"></a>
+			</div><br/>
+			<!-- <div><span>Have you forgot password?</span><a href="/forgetpass">  Click here</a>
+			<div> -->
+				<span>Create a new Account?</span><a href="/registration">  Register here</a>
+			</div>
+		</div>
+	</header>
+
+	<!-- <section class="vh-100" style="background-color: #508bfc;">
+		
+	  </section> -->
+
+	<%- include('./partials/footer'); %>
+	<%- include('./partials/foot'); %>
+
+</body>
+</html>

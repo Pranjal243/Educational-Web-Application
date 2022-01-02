@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<%- include('./partials/head'); %>
+	
+</head>
+<body>
+
+	<header>
+		<%- include('./partials/header'); %>
+
+		<% if(!role){ %>
+			<div class="col-md-4 col-md-offset-4 hero-content">
+				<div>
+					<h3>Welcome <%= name %>!</h3>
+				</div>
+				<div>
+					<center>
+						<table class="table table-hover text-center">
+							<tr><td>Name:  </td><td><%= name %></td></tr>
+							<tr><td>Phone:  </td><td><%= phone %></td></tr>
+							<tr><td>Class:  </td><td><%= standard %></td></tr>
+							<tr><td>School: </td><td><%= school %></td></tr>	
+						</table>
+					</center>
+				</div>
+				<div class="abc">
+					<form style="display: inline" action="/logout" method="get">
+						<button type="submit" class="btn btn-danger" style="background-color: red;">Logout</button>
+					</form>
+					<form style="display: inline" action="/resources" method="get">
+						<button type="submit" class="btn btn-success" style="background-color: green;">Resources</button>
+					</form>
+				</div>
+			</div>
+		  <% } else{ %>  
+			<div class="hero-content container">
+				<a href="/admin" style="color:white;background-color: green;">Upload PDF</a>
+				<h1>Admin Panel</h1>
+				<div class="container">
+					<%if (clients.length > 0) {%>
+					<div class="row">
+						<table>
+							<tr>
+								<th>Student ID</th><th>Name</th><th>Phone No.</th><th>Class</th><th>School</th>
+							</tr>
+							<%for (let client of clients) {%>
+								<tr>
+									<td><%= client.unique_id %></td>
+									<td><%= client.username %></td>
+									<td><%= client.phone %></td>
+									<td><%= client.class %></td>
+									<td><%= client.school %></td>
+								</tr>
+								<%}%>
+						</table>
+						
+						<div class="container mt-4">
+							<nav aria-label="Page navigation example">
+								<ul class="pagination justify-content-center">
+									<% if (hasPreviousPage) { %>
+									<li class="page-item">
+										<a class="page-link" href="?page=1" style="color: white;">First</a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href="?page=<%= previousPage %>" style="color: white;"><%= previousPage %></a>
+									</li>
+									<% } %>
+									<li class="page-item active">
+										<a class="page-link" href="?page=<%= currentPage %>" style="color: white;"><%= currentPage %></a>
+									</li>
+									<% if (hasNextPage) { %>
+									<li class="page-item">
+										<a class="page-link" href="?page=<%= nextPage %>" style="color: white;"><%= nextPage %></a>
+									</li>
+									<li class="page-item">
+										<a class="page-link" href="?page=<%= lastPage %>" style="color: white;">Last</a>
+									</li>
+									<% } %>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<%} else {%>
+					<div class="text-center">
+						<h5>No students found.</h5>
+						<div class="mt-4">
+							<a href="/" class="btn btn-outline-primary">Go Home</a>
+						</div>
+					</div>
+					<%}%>
+				</div>
+			</div>
+			
+		 <% } %>
+		
+</header>
+
+	<footer>
+		<%- include('./partials/footer'); %>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <%- include('./partials/head'); %>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$( "#form1" ).submit(function(event) {
+				event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: '/registration',
+					data: $('#form1').serialize(),
+					dataType: "json",
+					success: function(response){
+						//alert("a");
+						//console.log(response.Success);
+						$('#form1')[0].reset();
+
+						document.getElementById("check").innerHTML=response.Success;
+         					//ADD THIS CODE
+         					setTimeout(function(){
+         						document.getElementById("check").innerHTML="";
+         					},3000);
+         					if (response.Success=="You are regestered,You can login now.") {
+         						document.getElementById("aa").click();
+         					};
+         				},
+         				error: function() {
+         				}
+         			})
+			});
+		});
+	</script>
+</head>
+
+
+<body>
+
+    <header>
+		<%- include('./partials/header'); %>
+
+		<div class="col-md-4 col-md-offset-4 login-content register-div">
+			<h2>Register Now</h2>
+			<div class="form-group">
+				<form id="form1" method="post">
+					<div class="inputBox">
+						<input type="text" name="phone" placeholder="Phone No" required="" class="form-control">
+					</div>
+					<div class="inputBox">
+						<input type="text" name="username" placeholder="Username" required="" class="form-control">
+					</div>
+					<div class="inputBox">
+						<input type="text" name="school" placeholder="School Name" required="" class="form-control">
+					</div>
+	
+					<label for="class">Select your Class: </label>
+					<select id="class" name="class">
+						<option style="color: black;" value="VII">VII</option>
+						<option style="color: black;"value="VIII">VIII</option>
+						<option style="color: black;"value="IX">IX</option>
+						<option style="color: black;"value="X">X</option>
+						<option style="color: black;"value="XI">XI</option>
+						<option style="color: black;"value="XII">XII</option>
+					</select>
+					<div class="inputBox">
+						<input type="password" name="password" placeholder="Password" required="" class="form-control">
+					</div>
+					<div class="inputBox">
+						<input type="password" name="passwordConf" placeholder="Confirm Password" required="" class="form-control">
+					</div>
+					<input type="submit" value="Register" class="btn btn-success">
+				</form>
+			</div>
+			
+			<div class="mssg bg-danger">
+				<span id="check"></span>
+			</div>
+			<div>
+				<span>Already Registered? <a href="/login"> Login</a></span>
+			</div>
+			<div id="LangTable"><a href="/login" id="aa"></a>
+			</div>
+		</div>
+	</header>
+
+    <footer>
+		<%- include('./partials/footer'); %>
+	</footer>
+
+</body>
+</html>

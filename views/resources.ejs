@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<header>
+	<%- include('./partials/head'); %>
+    <%- include('./partials/header'); %>
+    
+    <div class="container">
+        <%if (resources.length > 0) {%>
+        <div class="row">
+            <table class="space">
+                <tr>
+                    <th>ID</th><th>Name</th><th>Class</th><th class="desc">Description</th><th>View</th>
+                </tr>
+                <%for (let resource of resources) {%>
+
+                    <tr>
+                        <td><%= resource.resource_id%></td>
+                        <td><%= resource.name%></td>
+                        <td><%= resource.standard%></td>
+                        <td class="desc"><%= resource.desc%></td>
+                        <td><a href="data:resource/<%=resource.img.contentType%>;base64,
+                            <%=resource.img.data.toString('base64')%>" style="color: blue;">Click</a></td>
+                    </tr>
+                <%}%>
+            </table>
+            
+
+            <div class="container mt-4">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <% if (hasPreviousPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= previousPage %>"><%= previousPage %></a>
+                        </li>
+                        <% } %>
+                        <li class="page-item active">
+                            <a class="page-link" href="?page=<%= currentPage %>"><%= currentPage %></a>
+                        </li>
+                        <% if (hasNextPage) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= nextPage %>"><%= nextPage %></a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<%= lastPage %>">Last</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <%} else {%>
+        <div class="text-center">
+            <h5>No products found.</h5>
+            <div class="mt-4">
+                <a href="/" class="btn btn-outline-primary">Go Home</a>
+            </div>
+        </div>
+        <%}%>
+    </div>
+
+
+	</header>
+
+
+	<footer>
+		<%- include('./partials/footer'); %>
+	</footer>
+
+</body>
+</html>

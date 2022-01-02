@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head'); %>
+</head>
+<body>
+    
+    <!-- header -->
+    <header>
+        
+        <%- include('./partials/header'); %>
+        <div class = "hero-content">
+            <div class = "container">
+                <div class = "hero-slider">
+                    <!-- item -->
+                    <div clas = "hero-slider-item">
+                        <h1 class = "hero-title">विद्याधनं सर्वधन प्रधानम्</h1>
+                        <p class = "text">আমরা নরসিংপুর, কাছাড়ে প্রতিষ্ঠিত একটি বেসরকারী ইনস্টিটিউট যা SEBA বোর্ডের বাংলা এবং ইংরেজি উভয় মাধ্যমের শিক্ষার্থীদের জন্য মানসম্পন্ন শিক্ষার উপর দৃষ্টি নিবদ্ধ করি</p>
+                        <a href = "/resources" class = "btn hero-btn">Learn More</a>
+                    </div>
+                    <!-- end of item -->
+                    <!-- item -->
+                    <div clas = "hero-slider-item">
+                        <h1 class = "hero-title">Education is the supreme wealth among all kind of wealth</h1>
+                        <p class = "text">We are a private institute established at Narsingpur, Cachar focusing on quality education for both Bengali and English medium students of SEBA board</p>
+                        <a href = "/resources" class = "btn hero-btn">Learn More</a>
+                    </div>
+                    <!-- end of item -->
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end of header -->
+
+    <!-- why section -->
+    <section class = "why">
+        <div class = "container">
+            <div class = "title title-md">
+                <h3>Why Learn More Academy</h3>
+                <div class = "line"></div>
+            </div>
+            <p class = "text">We care about students bright future and believe in providing personal guidance. We provide quality study materials to achieve all round success.</p>
+            <div class = "row">
+                <div class = "item">
+                    <img src = "images/why-img-1.png" alt = "">
+                    <h3 class = "lg-text">Professional Teachers</h3>
+                    <a href = "tel:9876543210" class = "btn primary-btn">Learn More</a>
+                </div>
+                <div class = "item">
+                    <img src = "images/why-img-2.png" alt = "">
+                    <h3 class = "lg-text">Comfortable Study Zone</h3>
+                    <a href = "tel:9876543210" class = "btn primary-btn">Learn More</a>
+                </div>
+                <div class = "item">
+                    <img src = "images/why-img-3.png" alt = "">
+                    <h3 class = "lg-text">Personal Teaching</h3>
+                    <a href = "tel:9876543210" class = "btn primary-btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end of why section -->
+
+    <!-- online course -->
+    <section class = "online-course">
+        <div class = "container">
+            <div class = "title title-md">
+                <h3>Register for Free to access Online Resources</h3>
+                
+                <div>
+                    <button type="button" class="btn btn-success submit-btn" onclick="window.location.href = '/register'">Register</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end of online course -->
+
+    <!-- end of skill section -->
+
+    <!-- counter section -->
+    <section class = "counter">
+        <div class = "row container">
+            <div class = "item">
+                <div class = "title title-sm">
+                    <h3>Students enrolled</h3>
+                </div>
+                <span class = "num"><%= enroled%></span>
+            </div>
+            <div class = "item">
+                <div class = "title title-sm">
+                    <h3>Resources Count</h3>
+                </div>
+                <span class = "num"><%= resource_count%></span>
+            </div>
+            <div class = "item">
+                <div class = "title title-sm">
+                    <h3>Class</h3>
+                </div>
+                <span class = "num">I to XII</span>
+            </div>
+            <div class = "item">
+                <div class = "title title-sm">
+                    <h3>faculty members</h3>
+                </div>
+                <span class = "num">6</span>
+            </div>
+        </div>
+    </section>
+    <!-- end of counter section -->
+    <%- include('./partials/footer'); %>
+
+    <%- include('./partials/foot'); %>
+</body>
+</html>
