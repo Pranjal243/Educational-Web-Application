@@ -90,7 +90,7 @@ router.post('/registration', function(req, res, next) {
 router.get('/login', function (req, res, next) {
 	return res.render('login.ejs');
 });
-// var role=false;
+
 router.post('/login', function (req, res, next) {
 	//console.log(req.body);
 	User.findOne({phone:req.body.phone},function(err,data){
@@ -145,7 +145,7 @@ router.get('/profile', function(req, res, next) {
 						.limit(ITEMS_PER_PAGE_ADMIN);
 	}).then(clients => {
 		res.render('data.ejs', {
-			"name":admin.username,"phone":admin.phone,"standard":admin.class,"school":admin.school,"role":admin.admin,
+			"name":admin.username,"phone":admin.phone,"standard":admin.class,"school":admin.school,"role":admin.unique_id,
 			clients: clients,
 			currentPage: page_admin,
 			hasNextPage: (ITEMS_PER_PAGE_ADMIN*page_admin)<totalItems_admin,

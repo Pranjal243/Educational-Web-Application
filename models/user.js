@@ -9,7 +9,7 @@ userSchema = new Schema( {
 	school: String,
 	class: String,
 	password: String,
-	passwordConf: String,
+	passwordConf: String
 }),
 User = mongoose.model('User', userSchema);
 
