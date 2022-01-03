@@ -10,10 +10,6 @@ userSchema = new Schema( {
 	class: String,
 	password: String,
 	passwordConf: String,
-	admin: {
-		type: Boolean,
-		default:false
-	}
 }),
 User = mongoose.model('User', userSchema);
 

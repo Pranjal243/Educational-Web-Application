@@ -51,7 +51,7 @@
 						<input type="text" name="phone" placeholder="Phone No" required="" class="form-control">
 					</div>
 					<div class="inputBox">
-						<input type="text" name="username" placeholder="Username" required="" class="form-control">
+						<input type="text" name="username" placeholder="Name" required="" class="form-control">
 					</div>
 					<div class="inputBox">
 						<input type="text" name="school" placeholder="School Name" required="" class="form-control">
@@ -59,18 +59,27 @@
 	
 					<label for="class">Select your Class: </label>
 					<select id="class" name="class">
-						<option style="color: black;" value="VII">VII</option>
-						<option style="color: black;"value="VIII">VIII</option>
-						<option style="color: black;"value="IX">IX</option>
-						<option style="color: black;"value="X">X</option>
-						<option style="color: black;"value="XI">XI</option>
-						<option style="color: black;"value="XII">XII</option>
+						<option style="color: black;" value="1">1</option>
+						<option style="color: black;"value="2">2</option>
+						<option style="color: black;"value="3">3</option>
+						<option style="color: black;"value="4">4</option>
+						<option style="color: black;"value="5">5</option>
+						<option style="color: black;"value="6">6</option>
+						<option style="color: black;" value="7">7</option>
+						<option style="color: black;"value="8">8</option>
+						<option style="color: black;"value="9">9</option>
+						<option style="color: black;"value="10">10</option>
+						<option style="color: black;"value="11-Science">11-Science</option>
+						<option style="color: black;"value="11-Arts">11-Arts</option>
+						<option style="color: black;"value="12-Science">12-Science</option>
+						<option style="color: black;"value="12-Arts">12-Arts</option>
 					</select>
 					<div class="inputBox">
-						<input type="password" name="password" placeholder="Password" required="" class="form-control">
+						<input type="password" name="password" placeholder="Password" required="" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 					</div>
 					<div class="inputBox">
-						<input type="password" name="passwordConf" placeholder="Confirm Password" required="" class="form-control">
+						<input type="password" name="passwordConf" placeholder="Confirm Password" required="" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+						title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 					</div>
 					<input type="submit" value="Register" class="btn btn-success">
 				</form>

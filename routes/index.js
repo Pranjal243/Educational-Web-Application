@@ -263,7 +263,7 @@ router.get('/admin', function (req, res, next) {
 					
 			// 	}
 			// })
-			if(req.session.userId==4)
+			if(req.session.userId==1)
 				res.render('admin.ejs',{ items: items });
 			else
 				res.send("You must be admin to visit this page.")

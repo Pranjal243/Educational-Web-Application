@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect('mongodb+srv://Hornet:Hornet%40123@cluster0.6okkh.mongodb.net/Registration?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://mishminath:akashi@cluster0.0dqb3.mongodb.net/LearnMoreAcademy?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, (err) => {
@@ -60,7 +60,7 @@ app.use(function (err, req, res, next) {
   res.send(err.message);
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 app.listen(PORT, function () {
   console.log('Server is started on http://127.0.0.1:'+PORT);
 });
