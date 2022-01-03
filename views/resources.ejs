@@ -6,6 +6,11 @@
     <%- include('./partials/header'); %>
     
     <div class="container">
+        <div style="align-self: center;">
+            <form style="display: inline" action="/profile" method="get">
+                <button type="submit" class="btn btn-success" style="background-color: green;">My Profile</button>
+            </form>
+        </div>
         <%if (resources.length > 0) {%>
         <div class="row">
             <table class="space">
@@ -19,8 +24,12 @@
                         <td><%= resource.name%></td>
                         <td><%= resource.standard%></td>
                         <td class="desc"><%= resource.desc%></td>
-                        <td><a href="data:resource/<%=resource.img.contentType%>;base64,
-                            <%=resource.img.data.toString('base64')%>" style="color: blue;">Click</a></td>
+                        <td>
+                            <form style="display: inline" action="/download" method="post">
+                                <input type = "hidden" name ="pdf_name" value="<%=resource.filename%>"/>
+                                <button type="submit" class="btn btn-success" style="background-color: green;">Download</button>
+                            </form>
+                        </td>
                     </tr>
                 <%}%>
             </table>
@@ -31,24 +40,25 @@
                     <ul class="pagination justify-content-center">
                         <% if (hasPreviousPage) { %>
                         <li class="page-item">
-                            <a class="page-link" href="?page=1">First</a>
+                            <a class="page-link" href="?page=1" style="color: white;">First</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<%= previousPage %>"><%= previousPage %></a>
+                            <a class="page-link" href="?page=<%= previousPage %>" style="color: white;"><%= previousPage %></a>
                         </li>
                         <% } %>
                         <li class="page-item active">
-                            <a class="page-link" href="?page=<%= currentPage %>"><%= currentPage %></a>
+                            <a class="page-link" href="?page=<%= currentPage %>" style="color: white;"><%= currentPage %></a>
                         </li>
                         <% if (hasNextPage) { %>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<%= nextPage %>"><%= nextPage %></a>
+                            <a class="page-link" href="?page=<%= nextPage %>" style="color: white;"><%= nextPage %></a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<%= lastPage %>">Last</a>
+                            <a class="page-link" href="?page=<%= lastPage %>" style="color: white;">Last</a>
                         </li>
                         <% } %>
                     </ul>
+                    
                 </nav>
             </div>
         </div>

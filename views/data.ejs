@@ -35,7 +35,12 @@
 			</div>
 		  <% } else{ %>  
 			<div class="hero-content container">
-				<a href="/admin" style="color:white;background-color: green;">Upload PDF</a>
+				<div>
+					<form style="display: inline" action="/logout" method="get">
+						<a href="/admin" style="color:white;background-color: green;">Upload PDF</a>
+						<button type="submit" class="btn btn-danger" style="background-color: red;">Logout</button>
+					</form>
+				</div>
 				<h1>Admin Panel</h1>
 				<div class="container">
 					<%if (clients.length > 0) {%>

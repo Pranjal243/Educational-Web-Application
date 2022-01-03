@@ -90,15 +90,15 @@ router.post('/registration', function(req, res, next) {
 router.get('/login', function (req, res, next) {
 	return res.render('login.ejs');
 });
-var role=false;
+// var role=false;
 router.post('/login', function (req, res, next) {
 	//console.log(req.body);
 	User.findOne({phone:req.body.phone},function(err,data){
 		if(data){
-			if(data.admin)
-				role=true;
-			else
-				role=false;
+			// if(data.admin)
+			// 	// role=true;
+			// else
+				// role=false;
 			if(data.password==req.body.password){
 				//console.log("Done Login");
 				req.session.userId = data.unique_id;
@@ -128,7 +128,7 @@ router.get('/profile', function(req, res, next) {
 		}else{
 			// console.log("found");
 			admin=data;
-			console.log(data.admin);
+			// console.log(data.admin);
 			// return res.render('data.ejs', {"name":data.username,"phone":data.phone,"standard":data.class,"school":data.school,"role":data.admin});
 			//return res.send(data);
 		}
@@ -225,15 +225,21 @@ router.get('/resources', function(req, res, next) {
 						.skip((page-1)*ITEMS_PER_PAGE)
 						.limit(ITEMS_PER_PAGE);
 	}).then(resources => {
-		res.render('resources.ejs', {
-			resources: resources,
-			currentPage: page,
-			hasNextPage: (ITEMS_PER_PAGE*page)<totalItems,
-			hasPreviousPage: page>1,
-			nextPage: page + 1,
-			previousPage: page - 1,
-			lastPage: Math.ceil(totalItems/ITEMS_PER_PAGE)
-		});
+		if(req.session.userId)
+		{
+			res.render('resources.ejs', {
+				resources: resources,
+				currentPage: page,
+				hasNextPage: (ITEMS_PER_PAGE*page)<totalItems,
+				hasPreviousPage: page>1,
+				nextPage: page + 1,
+				previousPage: page - 1,
+				lastPage: Math.ceil(totalItems/ITEMS_PER_PAGE)
+			});
+		}else{
+			res.send("You must be signed in to view resources");
+		}
+		
 	}).catch(err => {
 		console.log(err);
 	});
@@ -246,20 +252,21 @@ router.get('/admin', function (req, res, next) {
 			res.status(500).send('An error occurred', err);
 		}
 		else {
-			User.find({},(err,user) => {
-				if(err)
-				{
-					console.log(err);
-				res.status(500).send('An error occurred', err);
-				}
-				else
-				{
-					if(role)
-					res.render('admin.ejs',{ items: items });
-					else
-					res.send("You must be admin to visit this page.")
-				}
-			})
+			// User.find({},(err,user) => {
+			// 	if(err)
+			// 	{
+			// 		console.log(err);
+			// 		res.status(500).send('An error occurred', err);
+			// 	}
+			// 	else
+			// 	{
+					
+			// 	}
+			// })
+			if(req.session.userId==4)
+				res.render('admin.ejs',{ items: items });
+			else
+				res.send("You must be admin to visit this page.")
 			
 		}
 	})
@@ -270,7 +277,7 @@ var storage = multer.diskStorage({
 	  cb(null, 'uploads')
 	},
 	filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
+        cb(null, file.fieldname + '-' + Date.now() + '.pdf')
     }
   })
 var upload = multer({ storage: storage })
@@ -290,6 +297,7 @@ router.post("/uploadPdf",upload.single('Resource'),(req,res,next)=>{
 			temp=1;
 		}
 		console.log("Count is "+ temp)
+		// console.log(req.file.filename);
 		var obj = {
 			resource_id: temp,
 			name: req.body.name,
@@ -297,7 +305,7 @@ router.post("/uploadPdf",upload.single('Resource'),(req,res,next)=>{
 			standard: req.body.standard,
 			filename: req.file.filename,
 			img: {
-				data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename)),
+				data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename),{'encoding': 'binary'}),
             	contentType: 'pdf'
 			}
 		}
@@ -310,6 +318,18 @@ router.post("/uploadPdf",upload.single('Resource'),(req,res,next)=>{
 			}
 		});
 	}).sort({_id: -1}).limit(1);;
+  })
+
+  router.post('/download', function(req,res,next){
+	  console.log(req.body.pdf_name);
+	res.download(path.join(__dirname + '/../uploads/' + req.body.pdf_name), function (err) {
+        if (err) {
+            console.log("Download Error!");
+            console.log(err);
+        } else {
+            console.log("Download Success :)");
+        }
+    });
   })
 
 

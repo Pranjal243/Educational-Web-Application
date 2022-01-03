@@ -28,6 +28,8 @@ app.use(session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
+  maxAge  : new Date(Date.now() + 900000), //1 Hour
+  expires : new Date(Date.now() + 900000), //1 Hour
   store: new MongoStore({
     mongooseConnection: db
   })
