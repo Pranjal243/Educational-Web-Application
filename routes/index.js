@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user')
-const path = require('path')
-
 const fs = require("fs");
-const multer = require("multer");
 var UploadPDF = require('../models/UploadPDF');
 const { compile } = require('ejs');
 const { append, header } = require('express/lib/response');
@@ -16,7 +13,6 @@ router.get('/', function (req, res, next) {
 			enroled=data.unique_id;
 		} else {
 			enroled=0;
-			console.log("Error in getting enroled number");
 		}
 	}).sort({_id: -1}).limit(1);
 	UploadPDF.findOne({},function(err,data){
@@ -25,7 +21,6 @@ router.get('/', function (req, res, next) {
 			console.log(resource_count);
 		} else {
 			resource_count=0;
-			console.log("Error in getting resource count");
 		}
 	}).sort({_id: -1}).limit(1);
 	return res.render('index.ejs', {"enroled":enroled,"resource_count":resource_count});
@@ -126,11 +121,7 @@ router.get('/profile', function(req, res, next) {
 		if(!data){
 			res.redirect('/');
 		}else{
-			// console.log("found");
 			admin=data;
-			// console.log(data.admin);
-			// return res.render('data.ejs', {"name":data.username,"phone":data.phone,"standard":data.class,"school":data.school,"role":data.admin});
-			//return res.send(data);
 		}
 	});
 
@@ -158,16 +149,10 @@ router.get('/profile', function(req, res, next) {
 		console.log(err);
 	});
 })
-// code here 
-router.get('/profile', function (req, res, next) {
-	console.log("profile");
-	
-});
 
 router.get('/logout', function (req, res, next) {
 	console.log("logout")
 	if (req.session) {
-    // delete session object
     req.session.destroy(function (err) {
     	if (err) {
     		return next(err);
@@ -178,53 +163,16 @@ router.get('/logout', function (req, res, next) {
 }
 });
 
-router.get('/forgetpass', function (req, res, next) {
-	res.render("forget.ejs");
-});
 
-router.post('/forgetpass', function (req, res, next) {
-	//console.log('req.body');
-	//console.log(req.body);
-	User.findOne({phone:req.body.phone},function(err,data){
-		console.log(data);
-		if(!data){
-			res.send({"Success":"This phone No. Is not regestered!"});
-		}else{
-			// res.send({"Success":"Success!"});
-			if (req.body.password==req.body.passwordConf) {
-			data.password=req.body.password;
-			data.passwordConf=req.body.passwordConf;
-
-			data.save(function(err, Person){
-				if(err)
-					console.log(err);
-				else
-					console.log('Success');
-					res.send({"Success":"Password changed!"});
-			});
-		}else{
-			res.send({"Success":"Password does not matched! Both Password should be same."});
-		}
-		}
-	});
-	
-});
-
-// router.get('/resources', function (req, res, next) {
-// 	return res.render('resources.ejs');
-// });
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10;
 router.get('/resources', function(req, res, next) {
     const page = +req.query.page || 1;
 	let totalItems;
-    UploadPDF.find()
-	.countDocuments()
-	.then(numberOfResources => {
+    UploadPDF.find().countDocuments().then(numberOfResources => {
 		totalItems = numberOfResources;
-		return UploadPDF.find()
-						.skip((page-1)*ITEMS_PER_PAGE)
-						.limit(ITEMS_PER_PAGE);
-	}).then(resources => {
+		return UploadPDF.find().skip((page-1)*ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE);
+	})
+	.then(resources => {
 		if(req.session.userId)
 		{
 			res.render('resources.ejs', {
@@ -242,7 +190,7 @@ router.get('/resources', function(req, res, next) {
 		
 	}).catch(err => {
 		console.log(err);
-	});
+	})
 })
 
 router.get('/admin', function (req, res, next) {
@@ -252,17 +200,6 @@ router.get('/admin', function (req, res, next) {
 			res.status(500).send('An error occurred', err);
 		}
 		else {
-			// User.find({},(err,user) => {
-			// 	if(err)
-			// 	{
-			// 		console.log(err);
-			// 		res.status(500).send('An error occurred', err);
-			// 	}
-			// 	else
-			// 	{
-					
-			// 	}
-			// })
 			if(req.session.userId==1)
 				res.render('admin.ejs',{ items: items });
 			else
@@ -271,25 +208,8 @@ router.get('/admin', function (req, res, next) {
 		}
 	})
 });
-// SET STORAGE
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-	  cb(null, 'uploads')
-	},
-	filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + '.pdf')
-    }
-  })
-var upload = multer({ storage: storage })
 
-router.post("/uploadPdf",upload.single('Resource'),(req,res,next)=>{
-	// var pdf = fs.readFileSync(req.file.path);
-	// var encode_pdf = pdf.toString('base64');
-	// var final_pdf = {
-	// 	contentType:req.file.mimetype,
-	// 	pdf:new Buffer(encode_pdf,'base64')
-	// };
-	// var temp;
+router.post("/uploadPdf",(req,res,next)=>{
 	UploadPDF.findOne({},function(err,data){
 		if (data) {
 			temp = data.resource_id + 1;
@@ -297,17 +217,12 @@ router.post("/uploadPdf",upload.single('Resource'),(req,res,next)=>{
 			temp=1;
 		}
 		console.log("Count is "+ temp)
-		// console.log(req.file.filename);
 		var obj = {
 			resource_id: temp,
 			name: req.body.name,
 			desc: req.body.desc,
 			standard: req.body.standard,
-			filename: req.file.filename,
-			img: {
-				data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.file.filename),{'encoding': 'binary'}),
-            	contentType: 'pdf'
-			}
+			url: req.body.url,
 		}
 		UploadPDF.create(obj,function(err,result){
 			if(err){
@@ -319,18 +234,5 @@ router.post("/uploadPdf",upload.single('Resource'),(req,res,next)=>{
 		});
 	}).sort({_id: -1}).limit(1);;
   })
-
-  router.post('/download', function(req,res,next){
-	  console.log(req.body.pdf_name);
-	res.download(path.join(__dirname + '/../uploads/' + req.body.pdf_name), function (err) {
-        if (err) {
-            console.log("Download Error!");
-            console.log(err);
-        } else {
-            console.log("Download Success :)");
-        }
-    });
-  })
-
 
 module.exports = router;

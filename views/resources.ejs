@@ -24,12 +24,8 @@
                         <td><%= resource.name%></td>
                         <td><%= resource.standard%></td>
                         <td class="desc"><%= resource.desc%></td>
-                        <td>
-                            <form style="display: inline" action="/download" method="post">
-                                <input type = "hidden" name ="pdf_name" value="<%=resource.filename%>"/>
-                                <button type="submit" class="btn btn-success" style="background-color: green;">Download</button>
-                            </form>
-                        </td>
+                        <td><a href="<%=resource.url%>" target="_blank" onMouseOver="this.style.color='#0F0'"
+                            onMouseOut="this.style.color='#00F'" style="color: white;">Click</a></td>
                     </tr>
                 <%}%>
             </table>
@@ -66,7 +62,7 @@
         <div class="text-center">
             <h5>No Resources found.</h5>
             <div class="mt-4">
-                <a href="/" class="btn btn-outline-primary">Go Home</a>
+                <a href="/" class="btn " style="color: wheat;">Go Home</a>
             </div>
         </div>
         <%}%>
